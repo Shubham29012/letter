@@ -44,17 +44,17 @@ export default function TracerCanvas({ letter, onComplete }: Props) {
     }
   }, [lines.length]);
 
-  const handleDown = (e: any) => {
-    if (!canDraw) return; // block drawing before 15s
+  const handleDown = (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
+    if (!canDraw) return;
     drawingRef.current = true;
-    const pos = e.target.getStage().getPointerPosition();
+    const pos = e.target.getStage()?.getPointerPosition();
     if (!pos) return;
     setLines((prev) => [...prev, { points: [pos.x, pos.y] }]);
   };
 
-  const handleMove = (e: any) => {
+  const handleMove = (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
     if (!drawingRef.current || !canDraw) return;
-    const p = e.target.getStage().getPointerPosition();
+    const p = e.target.getStage()?.getPointerPosition();
     if (!p) return;
     setLines((prev) => {
       const next = [...prev];
