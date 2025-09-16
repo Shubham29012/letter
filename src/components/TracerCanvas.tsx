@@ -45,7 +45,7 @@ export default function TracerCanvas({ letter, onComplete }: Props) {
   }, [lines.length]);
 
   const handleDown = (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
-    if (!canDraw) return;
+    if (!canDraw) return; // block drawing before 15s
     drawingRef.current = true;
     const pos = e.target.getStage()?.getPointerPosition();
     if (!pos) return;
@@ -148,7 +148,9 @@ export default function TracerCanvas({ letter, onComplete }: Props) {
                   lineCap="round"
                   lineJoin="round"
                   opacity={showReference ? 0.25 : 0}
-                  ref={(node) => (pathRefs.current[s.id] = node)}
+                  ref={(node: Konva.Path | null) => {
+                    pathRefs.current[s.id] = node;
+                  }}
                 />
               ))}
 
